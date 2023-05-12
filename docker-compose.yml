@@ -9,20 +9,20 @@ services:
     hostname:       fleetdm-mysql
     volumes:
     - type:   volume
-      source: fleetdm_mysql
+      source: data_fleetdm
       target: /var/lib/mysql
     command: ['--server-id=2', '--report-host=fleetdm-mysql']
     ports:   ['3306:3306']
-    networks: ['fleetdm_network']
-    
+    networks: ['network_fleetdm']
+
   redis:
     extends:
       file:    extends/redis.yml
       service: redis
     container_name: fleetdm-redis
     hostname:       fleetdm-redis
-    networks: ['fleetdm_network']
-    
+    networks: ['network_fleetdm']
+
   fleetdm:
     extends:
       file:    extends/fleetdm.yml
@@ -33,18 +33,18 @@ services:
       FLEET_REDIS_ADDRESS:  fleetdm-redis:6379
     depends_on: ['mysql', 'redis']
     ports:      ['80:80']
-    networks: ['fleetdm_network']
+    networks: ['network_fleetdm']
     
     
 volumes:
-  fleetdm_mysql:
-    name:   fleetdm_mysql
+  data_fleetdm:
+    name:   data_fleetdm
     driver: local
 
 
 networks:
-  fleetdm_network:
-    name:   fleetdm_network
+  network_fleetdm:
+    name:   network_fleetdm
     driver: bridge
     driver_opts:
       com.docker.network.bridge.name: br_fleetdm_nat
