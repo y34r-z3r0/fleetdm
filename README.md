@@ -1,2 +1,9 @@
 # fleetdm
-Learning and testing FleetDM and Osquery features
+
+## Usage
+
+`docker-compose up -d`
+`docker-compose down`
+
+## Scheme
+osquery (macbook) > fleetdm
