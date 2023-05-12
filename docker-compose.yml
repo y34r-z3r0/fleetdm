@@ -1,0 +1,54 @@
+version: '2.4'
+services:
+
+  mysql:
+    extends:
+      file:    extends/mysql.yml
+      service: mysql
+    container_name: fleetdm-mysql
+    hostname:       fleetdm-mysql
+    volumes:
+    - type:   volume
+      source: fleetdm_mysql
+      target: /var/lib/mysql
+    command: ['--server-id=2', '--report-host=fleetdm-mysql']
+    ports:   ['3306:3306']
+    networks: ['fleetdm_network']
+    
+  redis:
+    extends:
+      file:    extends/redis.yml
+      service: redis
+    container_name: fleetdm-redis
+    hostname:       fleetdm-redis
+    networks: ['fleetdm_network']
+    
+  fleetdm:
+    extends:
+      file:    extends/fleetdm.yml
+      service: fleetdm
+    container_name: fleetdm
+    hostname:       fleetdm
+    environment:
+      FLEET_REDIS_ADDRESS:  fleetdm-redis:6379
+    depends_on: ['mysql', 'redis']
+    ports:      ['80:80']
+    networks: ['fleetdm_network']
+    
+    
+volumes:
+  fleetdm_mysql:
+    name:   fleetdm_mysql
+    driver: local
+
+
+networks:
+  fleetdm_network:
+    name:   fleetdm_network
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br_fleetdm_nat
+    ipam:
+     driver: default
+
+    
