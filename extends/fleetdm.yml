@@ -1,0 +1,43 @@
+version: '2.4'
+services:
+  fleetdm:
+    image: fleetdm/fleet:v4.27.1
+    command: sh -c "/usr/bin/fleet prepare db --no-prompt && /usr/bin/fleet serve"
+    environment:
+      FLEET_MYSQL_ADDRESS:  fleetdm-mysql:3306
+      FLEET_MYSQL_DATABASE: fleetdm
+      FLEET_MYSQL_USERNAME: fleetdm
+      FLEET_MYSQL_PASSWORD: 1234
+      # FLEET_MYSQL_TLS_CA:   /fleet/ssl/crt/ca.crt
+
+      # FLEET_MYSQL_READ_REPLICA_ADDRESS:  fleetdm-mysql-...:3306
+      # FLEET_MYSQL_READ_REPLICA_DATABASE: fleetdm
+      # FLEET_MYSQL_READ_REPLICA_USERNAME: fleetdm
+      # FLEET_MYSQL_READ_REPLICA_PASSWORD: 1234
+      # FLEET_MYSQL_READ_REPLICA_TLS_CA:   /fleet/ssl/crt/ca.crt
+      
+      FLEET_SERVER_ADDRESS: 0.0.0.0:80
+      # FLEET_SERVER_CERT:    /fleet/ssl/crt/server.crt
+      # FLEET_SERVER_KEY:     /fleet/ssl/key/server.key
+      FLEET_LOGGING_JSON:  'true'
+      FLEET_LOGGING_DEBUG: 'false'
+      FLEET_OSQUERY_RESULT_LOG_PLUGIN: filesystem
+      # FLEET_FILESYSTEM_RESULT_LOG_FILE: /fleet/log/osqueryd.results.log
+      FLEET_FILESYSTEM_ENABLE_LOG_ROTATION: 'true'
+      FLEET_SERVER_TLS: 'false'
+
+    # volumes:
+      # - type:      bind
+      #   source:  ../ssl
+      #   target:    /fleet/ssl
+      #   read_only: true
+      # - type:      bind
+      #   source:    /var/log/fleetdm
+      #   target:    /fleet/log
+      #   read_only: false
+      # - type:      bind
+      #   source:    /etc/ssl/certs/ca-certificates.crt
+      #   target:    /etc/ssl/certs/ca-certificates.crt
+      #   read_only: true
+
+    restart: unless-stopped

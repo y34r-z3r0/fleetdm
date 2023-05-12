@@ -1,0 +1,5 @@
+version: '2.4'
+services:
+  redis:
+    image: redis:7.0.8-alpine
+    restart: unless-stopped
