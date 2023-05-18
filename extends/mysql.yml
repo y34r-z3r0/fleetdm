@@ -14,10 +14,10 @@ services:
       source: ../configs/mysql/my.cnf
       target:   /etc/mysql/my.cnf
       read_only: true
-    # - type: bind
-    #   source: ../ssl
-    #   target:   /etc/mysql/ssl
-    #   read_only: true
+    - type: bind
+      source: ../ssl
+      target:   /etc/mysql/ssl
+      read_only: true
     # - type:      bind
     #   source:    /mnt/backup
     #   target:    /mnt/backup
