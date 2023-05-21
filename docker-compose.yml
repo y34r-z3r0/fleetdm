@@ -32,7 +32,7 @@ services:
     environment:
       FLEET_REDIS_ADDRESS:  fleetdm-redis:6379
     depends_on: ['mysql', 'redis']
-    ports:      ['80:80']
+    ports:      ['443:443']
     networks: ['network_fleetdm']
     
     

@@ -9,7 +9,7 @@ services:
       FLEET_MYSQL_DATABASE: fleetdm
       FLEET_MYSQL_USERNAME: fleetdm
       FLEET_MYSQL_PASSWORD: $FLEET_MYSQL_PASSWORD
-      FLEET_MYSQL_TLS_CA:   /fleet/ssl/crt/server.crt
+      # FLEET_MYSQL_TLS_CA:   /fleet/ssl/crt/server.crt
 
       # FLEET_MYSQL_READ_REPLICA_ADDRESS:  fleetdm-mysql-...:3306
       # FLEET_MYSQL_READ_REPLICA_DATABASE: fleetdm
@@ -26,7 +26,7 @@ services:
       FLEET_OSQUERY_RESULT_LOG_PLUGIN: filesystem
       # FLEET_FILESYSTEM_RESULT_LOG_FILE: /fleet/log/osqueryd.results.log
       FLEET_FILESYSTEM_ENABLE_LOG_ROTATION: 'true'
-      FLEET_SERVER_TLS: 'false'
+      # FLEET_SERVER_TLS: 'false'
 
     volumes:
       - type:      bind
