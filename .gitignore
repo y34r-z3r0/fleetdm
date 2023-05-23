@@ -1,2 +1,5 @@
 .env
-ssl
+
+ssl/key/server.key
+ssl/crt/server.crt
+ssl/csr/server.csr
