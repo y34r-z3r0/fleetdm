@@ -1,7 +1,7 @@
 version: '2.4'
 services:
   fleetdm:
-    image: fleetdm/fleet:latest
+    image: fleetdm/fleet:v4.33.0
     command: sh -c "/usr/bin/fleet prepare db --no-prompt && /usr/bin/fleet serve"
     environment:
       FLEET_MYSQL_ADDRESS:  fleetdm-mysql:3306
@@ -29,6 +29,7 @@ services:
       FLEET_FILESYSTEM_ENABLE_LOG_ROTATION: 'true'
       
       # fleetctl vulnerability-data-stream --dir /tmp/vulndbs
+      FLEET_VULNERABILITIES_DATABASES_PATH: /tmp/vulndbs
       FLEET_VULNERABILITIES_CPE_DATABASE_URL: 'https://github.com/fleetdm/nvd/releases'
       FLEET_VULNERABILITIES_CPE_TRANSLATIONS_URL: 'https://github.com/fleetdm/nvd/releases'
       FLEET_VULNERABILITIES_CVE_FEED_PREFIX_URL: 'https://nvd.nist.gov/vuln/data-feeds'
