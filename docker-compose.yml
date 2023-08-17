@@ -12,7 +12,7 @@ services:
       source: data_fleetdm
       target: /var/lib/mysql
     command: ['--server-id=2', '--report-host=fleetdm-mysql']
-    ports:   ['3306:3306']
+    #ports:   ['3306:3306']
     networks: ['network_fleetdm']
 
   redis:
