@@ -1,0 +1,57 @@
+version: '2.4'
+services:
+  fleetdm:
+    image: fleetdm/fleet:v4.43.1
+    command: sh -c "/usr/bin/fleet prepare db && /usr/bin/fleet serve"
+    environment:
+      FLEET_REDIS_ADDRESS:  127.0.0.1:6379
+      FLEET_REDIS_PASSWORD: $REDIS_PASSWORD
+
+      FLEET_MYSQL_ADDRESS:  127.0.0.1:3306
+
+      FLEET_MYSQL_DATABASE: fleetdm
+      FLEET_MYSQL_USERNAME: fleetdm
+      FLEET_MYSQL_PASSWORD: $MYSQL_PASSWORD
+      FLEET_MYSQL_TLS_CA:   /fleet/ssl/crt/ca.crt
+
+      FLEET_MYSQL_READ_REPLICA_ADDRESS:  127.0.0.1:3307
+      FLEET_MYSQL_READ_REPLICA_DATABASE: fleetdm
+      FLEET_MYSQL_READ_REPLICA_USERNAME: fleetdm
+      FLEET_MYSQL_READ_REPLICA_PASSWORD: $MYSQL_PASSWORD
+      FLEET_MYSQL_READ_REPLICA_TLS_CA:   /fleet/ssl/crt/ca.crt
+      
+      FLEET_SERVER_ADDRESS: 0.0.0.0:8443
+      FLEET_SERVER_CERT:    /fleet/ssl/crt/server.crt
+      FLEET_SERVER_KEY:     /fleet/ssl/key/server.key
+      FLEET_LOGGING_JSON:  'true'
+      FLEET_LOGGING_DEBUG: 'false'
+      FLEET_OSQUERY_RESULT_LOG_PLUGIN: filesystem
+      FLEET_FILESYSTEM_RESULT_LOG_FILE: /fleet/log/osqueryd.results.log
+      FLEET_FILESYSTEM_ENABLE_LOG_ROTATION: 'true'
+
+      # FLEET_VULNERABILITIES_DATABASES_PATH: '/tmp/vulndbs'
+      # FLEET_VULNERABILITIES_CPE_DATABASE_URL: 'https://github.com/fleetdm/nvd/releases'
+      # FLEET_VULNERABILITIES_CPE_TRANSLATIONS_URL: 'https://github.com/fleetdm/nvd/releases'
+      # FLEET_VULNERABILITIES_CVE_FEED_PREFIX_URL: 'https://nvd.nist.gov/vuln/data-feeds'
+      # FLEET_VULNERABILITIES_PERIODICITY: '1h'
+      # HTTPS_PROXY: 'http://example.com:port'
+      # NO_PROXY: '*.example.com'
+
+      # ENABLE METRICS
+      FLEET_PROMETHEUS_BASIC_AUTH_DISABLE: 'true'
+
+    volumes:
+      - type:      bind
+        source:  ../ssl
+        target:    /fleet/ssl
+        read_only: true
+      - type:      bind
+        source:    /var/log/fleetdm
+        target:    /fleet/log
+        read_only: false
+      - type:      bind
+        source:    /etc/ssl/certs/ca-certificates.crt
+        target:    /etc/ssl/certs/ca-certificates.crt
+        read_only: true
+    
+    restart: unless-stopped

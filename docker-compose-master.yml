@@ -1,0 +1,51 @@
+version: '2.4'
+services:
+
+  mysql-master:
+    extends:
+      file:    extends/mysql-master.yml
+      service: mysql
+    container_name: mysql-master
+    hostname:       mysql-master
+    volumes:
+    - type:   volume
+      source: mysql_master
+      target: /var/lib/mysql
+    command: ['--server-id=2', '--report-host=mysql-master']
+    network_mode: host
+  
+  redis-master:
+    extends:
+      file:    extends/redis-master.yml
+      service: redis
+    container_name: redis-master
+    hostname:       redis-master
+    network_mode: host
+    
+  fleetdm-master:
+    extends:
+      file:    extends/fleetdm-master.yml
+      service: fleetdm
+    container_name: fleetdm-master
+
+    hostname:       fleetdm
+    depends_on: ['mysql-master', 'redis-master']
+    network_mode: host
+    
+volumes:
+  mysql_master:
+    name:   mysql_master
+    driver: local
+
+networks:
+  fleetdm_network:
+    name:   fleetdm_network
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br_fleetdm_nat
+    ipam:
+     driver: default
+     config:
+       - subnet: 172.19.0.0/16
+
+    

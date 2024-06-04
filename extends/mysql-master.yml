@@ -1,0 +1,22 @@
+version: '2.4'
+services:
+  mysql:
+    image: mysql:8.0.33
+    
+    environment: 
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE:      fleetdm
+      MYSQL_USER:          fleetdm
+      MYSQL_PASSWORD:      $MYSQL_PASSWORD
+      MYSQL_TCP_PORT:      3306
+    volumes:
+    - type: bind
+      source: ../configs/mysql/my.cnf
+      target:   /etc/mysql/my.cnf
+      read_only: true
+    - type: bind
+      source: ../ssl
+      target:   /etc/mysql/ssl
+      read_only: true
+
+    restart: unless-stopped

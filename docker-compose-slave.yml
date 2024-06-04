@@ -1,0 +1,50 @@
+version: '2.4'
+services:
+
+  mysql-slave:
+    extends:
+      file:    extends/mysql-slave.yml
+      service: mysql
+    container_name: mysql-slave
+    hostname:       mysql-slave
+    volumes:
+    - type:   volume
+      source: mysql_slave
+      target: /var/lib/mysql
+    command: ['--server-id=3', '--report-host=mysql-slave']
+    network_mode: host
+  
+  redis-slave:
+    extends:
+      file:    extends/redis-slave.yml
+      service: redis
+    container_name: redis-slave
+    hostname:       redis-slave
+    network_mode: host
+    
+  fleetdm-slave:
+    extends:
+      file:    extends/fleetdm-slave.yml
+      service: fleetdm
+    container_name: fleetdm-slave
+    hostname:       fleetdm-slave
+    depends_on: ['mysql-slave', 'redis-slave']
+    network_mode: host
+    
+volumes:
+  mysql_slave:
+    name:   mysql_slave
+    driver: local
+
+networks:
+  fleetdm_network:
+    name:   fleetdm_network
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br_fleetdm_nat
+    ipam:
+     driver: default
+     config:
+       - subnet: 172.19.0.0/16
+
+    
