@@ -11,7 +11,7 @@ services:
     - type:   volume
       source: mysql_master
       target: /var/lib/mysql
-    command: ['--server-id=2', '--report-host=mysql-master']
+    command: ['--server-id=2', '--report-host=localhost', '--report-port=3306']
     network_mode: host
   
   redis-master:

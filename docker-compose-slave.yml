@@ -11,7 +11,7 @@ services:
     - type:   volume
       source: mysql_slave
       target: /var/lib/mysql
-    command: ['--server-id=3', '--report-host=mysql-slave']
+    command: ['--server-id=3', '--report-host=localhost', '--report-port=3307']
     network_mode: host
   
   redis-slave:

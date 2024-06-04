@@ -13,12 +13,6 @@ services:
       FLEET_MYSQL_USERNAME: fleetdm
       FLEET_MYSQL_PASSWORD: $MYSQL_PASSWORD
       FLEET_MYSQL_TLS_CA:   /fleet/ssl/crt/ca.crt
-
-      # FLEET_MYSQL_READ_REPLICA_ADDRESS:  127.0.0.1:3307
-      # FLEET_MYSQL_READ_REPLICA_DATABASE: fleetdm
-      # FLEET_MYSQL_READ_REPLICA_USERNAME: fleetdm
-      # FLEET_MYSQL_READ_REPLICA_PASSWORD: $MYSQL_PASSWORD
-      # FLEET_MYSQL_READ_REPLICA_TLS_CA:   /fleet/ssl/crt/ca.crt
       
       FLEET_SERVER_ADDRESS: 0.0.0.0:8080
       FLEET_SERVER_CERT:    /fleet/ssl/crt/server.crt
