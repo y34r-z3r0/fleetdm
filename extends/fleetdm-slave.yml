@@ -1,7 +1,7 @@
 version: '2.4'
 services:
   fleetdm:
-    image: fleetdm/fleet:v4.43.1
+    image: fleetdm/fleet:v4.50.1
     command: sh -c "/usr/bin/fleet prepare db && /usr/bin/fleet serve"
     environment:
       FLEET_REDIS_ADDRESS:  127.0.0.1:6380

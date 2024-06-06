@@ -1,7 +1,7 @@
 version: '2.4'
 services:
   redis:
-    image: redis:7.0.8-alpine
+    image: redis:7.0.15-alpine
     command: redis-server --requirepass $REDIS_PASSWORD --port 6380
     
     restart: unless-stopped

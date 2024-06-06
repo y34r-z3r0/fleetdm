@@ -27,8 +27,7 @@ services:
       file:    extends/fleetdm-master.yml
       service: fleetdm
     container_name: fleetdm-master
-
-    hostname:       fleetdm
+    hostname:       fleetdm-master
     depends_on: ['mysql-master', 'redis-master']
     network_mode: host
     
