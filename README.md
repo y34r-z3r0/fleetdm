@@ -36,3 +36,9 @@ Check cluster status:
 ```
 cluster.status()
 ```
+### Secondary commands
+
+Change primary instance:
+```
+cluster.setPrimaryInstance({host:"localhost", port: 3306"})
+```
