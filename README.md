@@ -42,3 +42,7 @@ Change primary instance:
 ```
 cluster.setPrimaryInstance({host:"localhost", port: 3306"})
 ```
+Get cluster to use `cluster.*` commands:
+```
+var cluster = dba.getCluster()
+```
